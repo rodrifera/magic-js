@@ -20,15 +20,15 @@ export class OAuthExtension extends Extension.Internal<'oauth'> {
     '@magic-sdk/react-native-expo': false,
   };
 
-  public loginWithRedirect(configuration: OAuthRedirectConfiguration) {
-    return this.utils.createPromiEvent<void>(async (resolve) => {
+  public async loginWithRedirect(configuration: OAuthRedirectConfiguration) {
+    
       const { provider, query } = await createURI.call(this, configuration);
 
       // @ts-ignore - this.sdk.endpoint is marked protected but we need to access it.
-      window.location.href = new URL(`/v1/oauth2/${provider}/start?${query}`, this.sdk.endpoint).href;
+      return new URL(`/v1/oauth2/${provider}/start?${query}`, this.sdk.endpoint).href;
 
-      resolve();
-    });
+   
+    
   }
 
   public getRedirectResult() {
